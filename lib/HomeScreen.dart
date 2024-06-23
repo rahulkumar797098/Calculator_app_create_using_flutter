@@ -31,6 +31,9 @@ class _HomeScreenState extends State<HomeScreen>{
       } else if (buttonText == "DL") {
         if (userInput.isNotEmpty) {
           userInput = userInput.substring(0, userInput.length - 1);
+          if (userInput.isEmpty) {
+            answer = " " ;
+          }
           isEqualPressed = false ;
         }
       } else if ("+-x/%.".contains(buttonText)) {
@@ -58,13 +61,14 @@ class _HomeScreenState extends State<HomeScreen>{
    // .......................... BODY PART ........................................//
    body:Column(
      children: [
-       SizedBox(height: 50,),
-
        Expanded(
-         flex: 2,
+         flex: 3,
          child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
            children: [
+             // ..................... Input Box ..........................//
              Container(
+               margin: EdgeInsets.only(right: 10),
                  alignment: Alignment.centerRight
                  ,child: Text("$userInput" ,
                style: TextStyle(fontWeight: FontWeight.bold ,
@@ -73,20 +77,19 @@ class _HomeScreenState extends State<HomeScreen>{
 
                ) ,)),
 
+             // ..................... Answer Box ...............................//
              Container(
+               margin: EdgeInsets.only(right: 10),
                  alignment:Alignment.centerRight
                  ,child: Text("$answer" , style: TextStyle(fontWeight: FontWeight.bold ,
                  fontSize: isEqualPressed ? 50 : 30,
                  color: isEqualPressed ? Colors.black : Colors.black54
-
              ),)) ,
 
            ],
          ),
        ) ,
 
-
-       SizedBox(height: 40,) ,
 
        Expanded(
          flex: 5,
@@ -266,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen>{
   // function to calculate the input operation
   void equalPressed() {
     String finaluserinput = userInput;
-    finaluserinput = userInput.replaceAll('x', '*') ;
+    finaluserinput = userInput.replaceAll('x', '*').replaceAll('%', '/100') ;
 
     // Calculate the operation
     Parser p = Parser();
